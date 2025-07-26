@@ -8,5 +8,7 @@
     "duration_damage" : "1",
     "action_death" : "shock",
     "duration_death" : "1",
-    "strength_max" : "100"
+    "strength_max" : "100",
+    "death_delay": "3",
+    "death_roundend": "1"
 }

@@ -16,6 +16,10 @@ duration_damage = config["duration_damage"]
 action_death = config["action_death"]
 duration_death = config["duration_death"]
 strength_max = config["strength_max"]
+death_delay = int(config["death_delay"])
+death_roundend = bool(int(config["death_roundend"]))
+
+roundend_shock = False
 
 def shock(shock_strength,shock_action,shock_duration):
     match shock_action:
@@ -45,20 +49,36 @@ def shock(shock_strength,shock_action,shock_duration):
     requests.post(api_url, data=json.dumps(api_data), headers=api_headers)
 
 def on_message(ws, message):
+    global roundend_shock
     payload = json.loads(message)
-    payload_type = payload['Type']
+    payload_type = payload["Type"]
 
     if payload_type == "DAMAGED":
         print("Damage received: " + str(payload['Value']) + "%")
-        if payload['Value'] > 100:
+        if payload["Value"] > 100:
             payload_value = str(100)
         else:
             payload_value = str(payload['Value'])
         shock(payload_value,action_damage,duration_damage)
     elif payload_type == "DEATH":
-        if payload['Name'] == vrchat_username:
+        if payload["Name"] == vrchat_username:
             print("Died")
-            shock("100",action_death,duration_death)
+            if death_roundend == True:
+                print("Waiting for round to end before taking action")
+                roundend_shock = True
+            else:
+                if death_delay != 0:
+                    time.sleep(death_delay)
+                shock("100",action_death,duration_death)
+    elif (payload_type == "STATS") and (payload["Name"] == "IsStarted") and (payload["Value"] == True):
+        print("Round has started")
+    elif (payload_type == "STATS") and (payload["Name"] == "IsStarted") and (payload["Value"] == False):
+        print("Round is not active")
+        if (death_roundend == True) and (roundend_shock == True):
+            roundend_shock = False
+            if death_delay != 0:
+                time.sleep(death_delay)
+                shock("100",action_death,duration_death)
 
 def on_error(ws, error):
     print("Error: " + error)
@@ -73,7 +93,7 @@ def on_close(ws, close_status_code, close_msg):
 def on_open(ws):
     print("*********************************************************************")
     print("** Terrors of Nowhere PiShock-Based Immersion Enhancement Script")
-    print("** Version Beta-1")
+    print("** Version Beta-2")
     print("** By ThistleBunny")
     print("**")
     print("** Remember: Always know your limits and follow the safety")
