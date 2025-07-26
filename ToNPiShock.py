@@ -9,7 +9,6 @@ config = json.load(open("config.json"))
 pishock_username = config["pishock_username"]
 pishock_apikey = config["pishock_apikey"]
 pishock_code = config["pishock_code"]
-pishock_appname = config["pishock_appname"]
 vrchat_username = config["vrchat_username"]
 action_damage = config["action_damage"]
 duration_damage = config["duration_damage"]
@@ -36,7 +35,7 @@ def shock(shock_strength,shock_action,shock_duration):
     api_data = {
         "Username" : pishock_username,
         "Apikey" : pishock_apikey,
-        "Name" : pishock_appname,
+        "Name" : "ToNPiShock",
         "Code" : pishock_code,
         "Intensity" : shock_strength,
         "Duration" : shock_duration,
@@ -100,7 +99,7 @@ def on_open(ws):
     print("** information on PiShock's Website. Never put a shocker on")
     print("** your head, neck, or near your spine.")
     print("**")
-    print("** This script is for use by consenting indivdiuals only. Do not")
+    print("** This script is for use by consenting individuals only. Do not")
     print("** let someone force you to use it if you don't wish to.")
     print("*********************************************************************")
     print("Connected to ToNSaveManager")
