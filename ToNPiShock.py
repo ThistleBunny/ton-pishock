@@ -17,7 +17,7 @@ duration_death = config["duration_death"]
 strength_max = config["strength_max"]
 death_delay = int(config["death_delay"])
 death_roundend = bool(int(config["death_roundend"]))
-enable_debug = death_roundend = bool(int(config["enable_debug"]))
+enable_debug = bool(int(config["enable_debug"]))
 
 if pishock_username == "PISHOCK USERNAME HERE":
     print("You must edit the config.json file before running this script.")
@@ -85,7 +85,7 @@ def on_message(ws, message):
             roundend_shock = False
             if death_delay != 0:
                 time.sleep(death_delay)
-                shock("100",action_death,duration_death)
+            shock("100",action_death,duration_death)
 
 def on_error(ws, error):
     print("Error: " + error)
