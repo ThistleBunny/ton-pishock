@@ -5,6 +5,8 @@ This script works by reading the websocket API output from ChrisFeline's [ToNSav
 
 This script is intended for use by consenting individuals only. Do not let anyone force you to run it if you do not wish to. Remember to read and follow all safety documentation on PiShock's website - do not place a PiShock shocker near your neck, head, or spine. Always know your limits and when to stop. Use of this script is at your own risk.
 
+It is recommended to set limits on your PiShock's share code (documented below) to what you're comfortable with. While this script should stay within the limits you set in the configuration file, it's always possible there's some bug or edge case with a specific terror, so having limits configured on PiShock's side is a good fallback just in case.
+
 ### Prerequisites
 This script depends on [ToNSaveManager](https://github.com/ChrisFeline/ToNSaveManager) to read data from the game. Once you have ToNSaveManager installed and running, go into the settings and make sure the `WebSocket API` setting is enabled.
 
@@ -29,6 +31,7 @@ Clone this repository. Navigate to the folder and run `pip install -r requiremen
 | strength\_max     | 1-100                      | 50                                   | The maximum strength of shocks/vibrates. Everything is a percentage of this.                     |
 | death\_delay      | any integer                | 3                                    | How long, in seconds, to delay the death action.                                                 |
 | death\_roundend   | 0-1                        | 0                                    | Set to 0 for a death action to occur after death, 1 for the action to occur once the round ends. |
+| enable\_debug     | 0-1                        | 0                                    | Set to 1 to enable trace output from the API for testing. You probably don't need this.          |
 
 Make sure everything is surrounded by quotation marks.
 
@@ -36,7 +39,7 @@ To get your username and API key for the first two options, go to the [account](
 
 To get a shocker share code, go to the [control](https://pishock.com/#/control) page for the PiShock. Click the share button, and then "+Code" to generate a share code. If you'd like to set limits (recommended), click the gear icon. Be sure that the duration_damage, duration_death, and strength_max options are all set at or below any limits you set on PiShock's website.
 
-The action_damage and action_death values should always be lowercase. If they are not typed exactly as above, the script will skip these actions. 
+The action_damage and action_death values determine if the shocker will give you a shock, vibrate, beep, or do nothing (none) when you take damage and die, respectively. Those words should be typed out as they are written above, otherwise the shocker will take no action on those events.
 
 The strength_max setting is the maximum power of shock/vibrate actions. Deaths will always be 100% of this value, while damage will be a percentage of this value. For example, if you set strength_max to 50, and then take 40% damage from a hit, you'd get 40% of 50%, meaning 20% of a shock/vibrate. If you die, you'll get a 50% shock/vibrate. 
 

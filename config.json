@@ -9,5 +9,6 @@
     "duration_death" : "1",
     "strength_max" : "100",
     "death_delay": "3",
-    "death_roundend": "1"
+    "death_roundend": "1",
+	"enable_debug": "0"
 }

@@ -10,13 +10,21 @@ pishock_username = config["pishock_username"]
 pishock_apikey = config["pishock_apikey"]
 pishock_code = config["pishock_code"]
 vrchat_username = config["vrchat_username"]
-action_damage = config["action_damage"]
+action_damage = config["action_damage"].lower()
 duration_damage = config["duration_damage"]
-action_death = config["action_death"]
+action_death = config["action_death"].lower()
 duration_death = config["duration_death"]
 strength_max = config["strength_max"]
 death_delay = int(config["death_delay"])
 death_roundend = bool(int(config["death_roundend"]))
+enable_debug = death_roundend = bool(int(config["enable_debug"]))
+
+if pishock_username == "PISHOCK USERNAME HERE":
+    print("You must edit the config.json file before running this script.")
+    print("Otherwise nothing will happen. Please see the readme file for")
+    print("information on what you need to configure.")
+    input("Press Enter to continue")
+    quit()
 
 roundend_shock = False
 
@@ -105,7 +113,7 @@ def on_open(ws):
     print("Connected to ToNSaveManager")
 
 if __name__ == "__main__":
-    websocket.enableTrace(False)
+    websocket.enableTrace(enable_debug)
     ws = websocket.WebSocketApp("ws://localhost:11398",
                               on_open=on_open,
                               on_message=on_message,
